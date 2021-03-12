@@ -13,7 +13,6 @@ Health check API endpoint
 from flask import make_response, jsonify
 from flask_restx import Resource
 from flask_accepts import for_swagger
-from pyslack.notify import NotificationService
 from marshmallow import Schema, fields
 
 # Local imports
@@ -21,6 +20,7 @@ from flask_utils.config_util import get_config
 from flask_utils.logger_util import get_common_logger
 from flask_utils.db_util import DBUtil
 from flask_utils.api_util import api
+from flask_utils.slack_util import NotificationService
 
 logger = get_common_logger(__name__)
 oracle_config = get_config().db_config
@@ -89,7 +89,7 @@ class ApiMonitor(Resource):
             else:
                 raise Exception("Error encountered when attempting healthcheck with Oracle Financials database")
 
-        except Exception as err: # pylint: disable=broad-except
+        except Exception as err:
             logger.error('API health check failure: %s', err, exc_info=True)
             return make_response(jsonify(
                 status="FAIL",
@@ -102,11 +102,11 @@ class ApiNotificationsTest(Resource):
 
     def get(self, title, message):
         api_config = get_config().api_config
-        notification_service = NotificationService(webhook=api_config["slack_key"],username=api_config["title"])
-        notification_service.success(title=title, message=message,link=api_config["app_source"])
+        notification_service = NotificationService(webhook=api_config["slack_key"], username=api_config["title"])
+        notification_service.success(title=title, message=message, link="https://github.huit.harvard.edu/HUIT/flask_utils")
         return make_response(jsonify({
             "alert": "sent notification to slack",
             "title": title,
             "message": message,
-            "link": api_config["app_source"]
+            "link": "https://github.huit.harvard.edu/HUIT/flask_utils"
         }))
