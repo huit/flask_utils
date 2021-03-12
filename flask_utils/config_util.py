@@ -11,8 +11,6 @@ from botocore.exceptions import ClientError
 
 from flask_utils.logger_util import get_common_logger
 
-# Set a minimum log level DEBUG, INFO, WARNING, ERROR
-
 #============================================================================================
 # Globals
 #============================================================================================

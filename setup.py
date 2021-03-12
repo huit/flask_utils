@@ -23,8 +23,10 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     install_requires=[
-        "git+ssh://git@github.huit.harvard.edu/HUIT/pyconfig.git@development",
         "cx-Oracle",
-        "Flask"
+        "Flask",
+        'boto3==1.12.36',
+        'botocore==1.15.36',
+        'PyYAML==5.3.1'
     ]
 )
