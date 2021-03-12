@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.huit.harvard.edu/HUIT/flask_db_util",
     project_urls={
-        "Bug Tracker" : "https://github.huit.harvard.edu/HUIT/flask_db_util/issues"
+        "Bug Tracker": "https://github.huit.harvard.edu/HUIT/flask_db_util/issues"
     },
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -22,4 +22,9 @@ setuptools.setup(
     ],
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
+    install_requires=[
+        "git+ssh://git@github.huit.harvard.edu/HUIT/pyconfig.git@development",
+        "cx-Oracle",
+        "Flask"
+    ]
 )

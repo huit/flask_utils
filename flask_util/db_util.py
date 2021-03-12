@@ -18,10 +18,12 @@ from config.config import get_common_logger, get_config
 
 logger = get_common_logger(__name__)
 
+
 class DBUtil:
     """
     Class for interacting with the database
     """
+    @staticmethod
     def get_session_pool(self):
         """
         Function for creating a session pool with the database
@@ -29,17 +31,15 @@ class DBUtil:
         oracle_config = get_config().db_config
 
         if oracle_config.get('pool') is None:
-            user = oracle_config.get('user')
-            oracle_passwd = oracle_config.get('password')
             host = oracle_config.get('host')
             port = oracle_config.get('port')
             instance = oracle_config.get('instance')
 
             try:
-                dsn_str = cx_Oracle.makedsn(host, port,service_name=instance)
+                dsn_str = cx_Oracle.makedsn(host, port, service_name=instance)
                 pool = cx_Oracle.SessionPool(
-                    user=user,
-                    password=oracle_passwd,
+                    user=oracle_config.get('user'),
+                    password=oracle_config.get('pwd'),
                     dsn=dsn_str,
                     min=2,
                     max=5,
@@ -52,7 +52,7 @@ class DBUtil:
                 logger.error("Context: %s", obj.context)
                 logger.error("Message: %s", obj.message)
                 return make_response(jsonify(
-                    message = str("Error connecting to the database and creating a session pool")
+                    message=str("Error connecting to the database and creating a session pool")
                 ), 500)
             oracle_config['pool'] = pool
             return pool
