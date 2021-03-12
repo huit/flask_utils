@@ -14,7 +14,8 @@ import cx_Oracle
 from flask import make_response, jsonify
 
 # Local imports
-from config.config import get_common_logger, get_config
+from flask_util.config_util import get_config
+from flask_util.logger_util import get_common_logger
 
 logger = get_common_logger(__name__)
 
