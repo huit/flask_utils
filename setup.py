@@ -4,11 +4,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="aais-flask-db-util",
+    name="adex-flask-utils",
     version="0.0.1",
-    author="Jinesh Mehta",
-    author_email="jinesh_mehta@harvard.edu",
-    description="A utility for handling Oracle db operations within a Flask application",
+    author="Michael Kerry",
+    author_email="michael_kerry@harvard.edu",
+    description="A utility for handling config, logging, security and Oracle db operations within a Flask application",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.huit.harvard.edu/HUIT/flask_db_util",
