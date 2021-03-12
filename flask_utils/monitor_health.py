@@ -14,6 +14,7 @@ from flask import make_response, jsonify
 from flask_restx import Resource
 from flask_accepts import for_swagger
 from pyslack.notify import NotificationService
+from marshmallow import Schema, fields
 
 # Local imports
 from flask_utils.config_util import get_config
