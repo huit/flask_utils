@@ -2,7 +2,7 @@
 from functools import wraps
 from flask import request, abort
 
-from flask_util.config_util import get_config
+from flask_utils.config_util import get_config
 
 
 #============================================================================================
