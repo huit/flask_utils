@@ -64,6 +64,8 @@ class NotificationService:
         :return:
         """
         if link:
+            if link_title is None:
+                link_title = "link"
             fallback = f" :{icon}: *{title}*: (<{link}|{link_title}>)"
         else:
             fallback = f" :{icon}: *{title}*"
