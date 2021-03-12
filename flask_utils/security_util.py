@@ -16,7 +16,7 @@ def apikey_required(view_function):
     @wraps(view_function)
     # the new, post-decoration function. Note *args and **kwargs here.
     def decorated_function(*args, **kwargs):
-        apikey = get_config().api_config['apikey']
+        apikey = get_config().api_config['api_key']
         if request.headers.get('x-api-key') and request.headers.get('x-api-key') == apikey:
             return view_function(*args, **kwargs)
         else:
