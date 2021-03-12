@@ -25,6 +25,8 @@ setuptools.setup(
     install_requires=[
         "cx-Oracle",
         "Flask",
+        "flask-restx",
+        "flask_accepts",
         'boto3==1.12.36',
         'botocore==1.15.36',
         'PyYAML==5.3.1'
