@@ -25,7 +25,7 @@ class DBUtil:
     Class for interacting with the database
     """
     @staticmethod
-    def get_session_pool(self):
+    def get_session_pool():
         """
         Function for creating a session pool with the database
         """
@@ -72,7 +72,7 @@ class DBUtil:
             logger.error("Context: %s", obj.context)
             logger.error("Message: %s", obj.message)
             return make_response(jsonify(
-                message = str("Error acquiring database connection from the session pool")
+                message=str("Error acquiring database connection from the session pool")
             ), 500)
         return connection
 
@@ -82,6 +82,7 @@ class DBUtil:
         Function for converting a query result row into a dictionary
         """
         column_names = [d[0] for d in cursor.description]
+
         def create_row(*args):
             return dict(zip(column_names, args))
         return create_row
