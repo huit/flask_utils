@@ -107,7 +107,7 @@ class NotificationService:
         """
         fallback = self.setup_fallback(msg_icon.value, title, link, link_title)
         attachments = self.setup_attachments(msg_color.value, fallback, message)
-        requests.post(self.slack_url,
+        return requests.post(self.slack_url,
                       data={"payload": self.slack_payload_with_attachments(attachments)})
 
     def success(self, title: str, message: str = "Success!", link: str = None, link_title: str = None):
@@ -119,7 +119,7 @@ class NotificationService:
         :param link_title:
         :return:
         """
-        self.send_msg(title, Color.SUCCESS, Icon.SUCCESS, message, link, link_title)
+        return self.send_msg(title, Color.SUCCESS, Icon.SUCCESS, message, link, link_title)
 
     def info(self, title: str, message: str, link: str = None, link_title: str = None):
         """
@@ -130,7 +130,7 @@ class NotificationService:
         :param link_title:
         :return:
         """
-        self.send_msg(title, Color.INFO, Icon.INFO, message, link, link_title)
+        return self.send_msg(title, Color.INFO, Icon.INFO, message, link, link_title)
 
     def error(self, title: str, message: str, link: str = None, link_title: str = None):
         """
@@ -141,7 +141,7 @@ class NotificationService:
         :param link_title:
         :return:
         """
-        self.send_msg(title, Color.ERROR, Icon.ERROR, message, link, link_title)
+        return self.send_msg(title, Color.ERROR, Icon.ERROR, message, link, link_title)
 
     def warning(self, title: str, message: str, link: str = None, link_title: str = None):
         """
@@ -152,4 +152,4 @@ class NotificationService:
         :param link_title:
         :return:
         """
-        self.send_msg(title, Color.WARNING, Icon.WARNING, message, link, link_title)
+        return self.send_msg(title, Color.WARNING, Icon.WARNING, message, link, link_title)
