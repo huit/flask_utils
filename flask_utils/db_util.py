@@ -110,3 +110,23 @@ class DBUtil:
                 message = str("Unable to execute query against the database")
             ), 500)
         return query_result
+
+    def execute_insert_or_update(self, pool, query_string, args=None):
+        """
+        Function for executing an insert query against the database via the session pool
+        """
+        try:
+            connection = self.create_connection(pool)
+            cursor = connection.cursor()
+            if args is not None:
+                cursor.execute(query_string, args)
+            else:
+                cursor.execute(query_string)
+            cursor.commit()
+            cursor.close()
+            pool.release(connection)
+        except cx_Oracle.DatabaseError as err:
+            obj, = err.args
+            logger.error("Context: %s", obj.context)
+            logger.error("Message: %s", obj.message)
+            raise Exception(err)
