@@ -29,6 +29,7 @@ setuptools.setup(
         "flask_accepts",
         'boto3==1.12.36',
         'botocore==1.15.36',
-        'PyYAML==5.3.1'
+        'PyYAML==5.3.1',
+        'requests==2.25.1'
     ]
 )
