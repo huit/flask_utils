@@ -104,5 +104,5 @@ class ApiNotificationsTest(Resource):
         api_config = get_config().api_config
         notification_service = NotificationService(webhook=get_config().get_value("SLACK_APIKEY"), username=api_config["title"])
         response = notification_service.success(title=title, message=message, link="https://github.huit.harvard.edu/HUIT/flask_utils")
-        logger.info(response)
-        return response
+        logger.info(response.json())
+        return response.json()
