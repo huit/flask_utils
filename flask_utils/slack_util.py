@@ -3,6 +3,8 @@ import json
 
 from enum import Enum
 
+from requests import Response
+
 DEFAULT_USERNAME = "Python Slack Notifications"
 DEFAULT_ICON_EMOJI = "slack"
 
@@ -94,7 +96,7 @@ class NotificationService:
         ]
 
     def send_msg(self, title: str, msg_color: Color, msg_icon: Icon, message: str, link: str = None,
-                 link_title: str = None):
+                 link_title: str = None) -> Response:
         """
 
         :param title:
@@ -110,7 +112,7 @@ class NotificationService:
         return requests.post(self.slack_url,
                       data={"payload": self.slack_payload_with_attachments(attachments)})
 
-    def success(self, title: str, message: str = "Success!", link: str = None, link_title: str = None):
+    def success(self, title: str, message: str = "Success!", link: str = None, link_title: str = None) -> Response:
         """
         Sends success message using COLOR_SUCCESS and ICON_SUCCESS
         :param title:
@@ -121,7 +123,7 @@ class NotificationService:
         """
         return self.send_msg(title, Color.SUCCESS, Icon.SUCCESS, message, link, link_title)
 
-    def info(self, title: str, message: str, link: str = None, link_title: str = None):
+    def info(self, title: str, message: str, link: str = None, link_title: str = None) -> Response:
         """
         Sends informational message using COLOR_INFO and ICON_INFO
         :param title:
@@ -132,7 +134,7 @@ class NotificationService:
         """
         return self.send_msg(title, Color.INFO, Icon.INFO, message, link, link_title)
 
-    def error(self, title: str, message: str, link: str = None, link_title: str = None):
+    def error(self, title: str, message: str, link: str = None, link_title: str = None) -> Response:
         """
         Sends error message using COLOR_ERROR and ICON_ERROR
         :param title:
@@ -143,7 +145,7 @@ class NotificationService:
         """
         return self.send_msg(title, Color.ERROR, Icon.ERROR, message, link, link_title)
 
-    def warning(self, title: str, message: str, link: str = None, link_title: str = None):
+    def warning(self, title: str, message: str, link: str = None, link_title: str = None) -> Response:
         """
         Sends informational message using COLOR_WARNING and ICON_WARNING
         :param title:

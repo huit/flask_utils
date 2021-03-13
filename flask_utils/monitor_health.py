@@ -104,5 +104,10 @@ class ApiNotificationsTest(Resource):
         api_config = get_config().api_config
         notification_service = NotificationService(webhook=get_config().get_value("SLACK_APIKEY"), username=api_config["title"])
         response = notification_service.success(title=title, message=message, link="https://github.huit.harvard.edu/HUIT/flask_utils")
-        logger.info(response.json())
-        return response.json()
+        return make_response(jsonify({
+            "alert": "sent notification to slack",
+            "title": title,
+            "message": message,
+            "link": "https://github.huit.harvard.edu/HUIT/flask_utils",
+            "responseText": response.text
+        }))
