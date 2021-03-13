@@ -111,9 +111,9 @@ class DBUtil:
             ), 500)
         return query_result
 
-    def execute_insert_or_update(self, pool, query_string, args=None):
+    def execute_update(self, pool, query_string, args=None):
         """
-        Function for executing an insert query against the database via the session pool
+        Function for executing an insert/update query against the database via the session pool
         """
         try:
             connection = self.create_connection(pool)
@@ -122,8 +122,8 @@ class DBUtil:
                 cursor.execute(query_string, args)
             else:
                 cursor.execute(query_string)
-            cursor.commit()
             cursor.close()
+            connection.commit()
             pool.release(connection)
         except cx_Oracle.DatabaseError as err:
             obj, = err.args
