@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""
-Health check API endpoint
-"""
+
+# Health check API endpoint
+
 # -*- encoding: utf-8 -*-
 
 #============================================================================================

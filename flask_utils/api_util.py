@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-Initialize a Flask-RestX API object
-"""
+
 # -*- encoding: utf-8 -*-
 
 #============================================================================================
@@ -13,9 +11,9 @@ Initialize a Flask-RestX API object
 from flask_restx import Api
 from flask_utils.config_util import get_config
 
-# local imports
-
 api_config = get_config().api_config
+
+# Initialize a Flask-RestX API object
 
 authorizations = {
     'apikey': {
