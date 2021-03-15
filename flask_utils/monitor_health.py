@@ -20,7 +20,7 @@ from flask_utils.config_util import get_config
 from flask_utils.logger_util import get_common_logger
 from flask_utils.db_util import DBUtil
 from flask_utils.api_util import api
-from flask_utils.slack_util import NotificationService
+from pyslack.notify import NotificationService
 
 logger = get_common_logger(__name__)
 oracle_config = get_config().db_config
@@ -64,8 +64,8 @@ class MonitorHealthFailSchema(Schema):
 
 @ns.route("/health")
 class ApiMonitor(Resource):
-    """
-    /monitor/health The endpoint verifies the FIN Employee API is available
+    f"""
+    /monitor/health The endpoint verifies the {get_config().api_config.get("title")} API is available
     """
     # Using multiple @responds annotations for differing schemas is not available yet in Flask_Accepts
     # @responds(schema=MonitorHealthPassSchema, api=api)
@@ -99,15 +99,24 @@ class ApiMonitor(Resource):
 
 @ns.route("/hello/<string:title>/<string:message>")
 class ApiNotificationsTest(Resource):
-
+    """
+    Allows the user to confirm the proper functioning of the slack integration, assuming that it
+    """
     def get(self, title, message):
         api_config = get_config().api_config
-        notification_service = NotificationService(webhook=get_config().get_value("SLACK_APIKEY"), username=api_config["title"])
-        response = notification_service.success(title=title, message=message, link="https://github.huit.harvard.edu/HUIT/flask_utils")
-        return make_response(jsonify({
-            "alert": "sent notification to slack",
-            "title": title,
-            "message": message,
-            "link": "https://github.huit.harvard.edu/HUIT/flask_utils",
-            "responseText": response.text
-        }))
+        webhook = get_config().get_value("SLACK_APIKEY")
+        if webhook:
+            notification_service = NotificationService(webhook=webhook, username=api_config["title"])
+            response = notification_service.success(title=title, message=message, link="https://github.huit.harvard.edu/HUIT/flask_utils")
+            response_dict = {
+                "alert": "sent notification to slack",
+                "title": title,
+                "message": message,
+                "link": "https://github.huit.harvard.edu/HUIT/flask_utils",
+                "responseText": response.text
+            }
+        else:
+            response_dict = {
+                "alert": "slack integration not set up: requires configuration value for SLACK_APIKEY"
+            }
+        return make_response(jsonify(response_dict))
