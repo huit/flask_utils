@@ -25,9 +25,7 @@ from pyslack.notify import NotificationService
 logger = get_common_logger(__name__)
 db_util = DBUtil()
 
-
-def get_ns():
-    return get_api().namespace('monitor',
+ns = get_api().namespace('monitor',
                    description='Health check endpoint which returns a status 200 and status: '
                                'Pass if the API is up and responsive')
 
