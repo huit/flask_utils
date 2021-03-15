@@ -23,7 +23,6 @@ from flask_utils.api_util import get_api
 from pyslack.notify import NotificationService
 
 logger = get_common_logger(__name__)
-oracle_config = get_config().db_config
 db_util = DBUtil()
 
 ns = get_api().namespace('monitor',
@@ -67,6 +66,8 @@ class ApiMonitor(Resource):
     f"""
     /monitor/health The endpoint verifies the {get_config().api_config.get("title")} API is available
     """
+    api = get_api()
+
     # Using multiple @responds annotations for differing schemas is not available yet in Flask_Accepts
     # @responds(schema=MonitorHealthPassSchema, api=api)
     # @responds(schema=MonitorHealthFailSchema, api=api)
