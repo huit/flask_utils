@@ -11,8 +11,18 @@
 from flask_restx import Api
 from flask_utils.config_util import get_config
 
+API = None
 
-def get_api_setup() -> Api:
+
+def get_api() -> Api:
+    global API
+    if API is None:
+        setup_api()
+
+    return API
+
+
+def setup_api():
     """
     Initialize and return a Flask-RestX AP
     :return:
@@ -27,7 +37,8 @@ def get_api_setup() -> Api:
         }
     }
 
-    return Api(
+    global API
+    API = Api(
         version='1.0',
         title=api_config.get('title'),
         description=api_config.get('description'),
