@@ -19,14 +19,14 @@ from marshmallow import Schema, fields
 from flask_utils.config_util import get_config
 from flask_utils.logger_util import get_common_logger
 from flask_utils.db_util import DBUtil
-from flask_utils.api_util import api
+from flask_utils.api_util import get_api
 from pyslack.notify import NotificationService
 
 logger = get_common_logger(__name__)
 oracle_config = get_config().db_config
 db_util = DBUtil()
 
-ns = api.namespace('monitor',
+ns = get_api().namespace('monitor',
                    description='Health check endpoint which returns a status 200 and status: '
                                'Pass if the API is up and responsive')
 
