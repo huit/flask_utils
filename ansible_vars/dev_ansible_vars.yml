@@ -5,27 +5,28 @@
 # for 'target_app_secrets_ref' the task definition will include the lookup keys, which will be
 # fulfilled when the task definition is run
 target_app_secrets_ref:
-  - DB_PWD: adex-hapi-util-db-pw
-    ECS_APIKEY: adex-flask-simple-api-key
-    SLACK_APIKEY: slack-webhook-test-key
+  - DB_PWD: (REQUIRED) <identifier for a valid aws secret stored in either parameter store or secrets manager>
+    ECS_APIKEY: (REQUIRED) <identifier for a valid aws secret stored in either parameter store or secrets manager>
+    SLACK_APIKEY: (OPTIONAL, but REQUIRED for slack integration) <identifier for a valid aws secret stored in either parameter store or secrets manager>
 # for 'target_app_env' the keys and values are exactly included in the task definition
 target_app_env:
+  # this first set of variables/values is REQUIRED for minimum functioning of the app
   - name: DB_HOST
-    value: adexutilsportal-dev-oracle-standalone.cjj6jzpn2twl.us-east-1.rds.amazonaws.com
+    value: <some valid db host>
   - name: DB_PORT
-    value: 8003
+    value: <some valid db port>
   - name: DB_INSTANCE
-    value: DMAUTDV
+    value: <some valid db service name - for oracle connection>
   - name: DB_USER
-    value: cap
+    value: <some valid db username>
   - name: APP_NAME
-    value: Flask Simple API
+    value: <will appear in swagger documentation, slack integration>
   - name: APP_DESCRIPTION
-    value: Flask Simple API provides a template for starting a flask-based api that runs in a Docker container and that is deployable to AWS using a set of ansible scripts.
-  - name: DB_TABLE_DEPT
-    value: DEPT
-  - name: DB_TABLE_EMP
-    value: EMP
+    value: <will appear in swagger documentation>
+    # values after this line are optional and arbitrary
+  - name: DB_TABLE_NAME
+    value: <SOME_VALID_DB_TABLE_NAME>
 
-deploy_type: app
-target_app_name: adex-flask-simple-api
+# these are used by the adex deploy scripts
+deploy_type: app <could also instead be 'job'>
+target_app_name: <a valid app name for your build process>
