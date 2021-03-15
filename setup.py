@@ -31,8 +31,6 @@ setuptools.setup(
         'botocore==1.15.36',
         'PyYAML==5.3.1',
         'requests==2.25.1',
-        'setuptools>=42',
-        'wheel==0.36.2',
-        'https://github.com/huit/pyslack/archive/v1.0.1.tar.gz'
+        'pyslack @ https://github.com/huit/pyslack/archive/v1.0.1.tar.gz#egg=pyslack'
     ]
 )
