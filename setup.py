@@ -27,9 +27,6 @@ setuptools.setup(
         "Flask==1.1.2",
         "flask-restx==0.2.0",
         "flask_accepts==0.17.4",
-        'boto3==1.12.36',
-        'botocore==1.15.36',
-        'PyYAML==5.3.1',
         'pyconfig @ https://github.com/huit/pyconfig/archive/v0.0.1.tar.gz#egg=pyconfig',
         'pyslack @ https://github.com/huit/pyslack/archive/v1.0.3.tar.gz#egg=pyslack'
     ]

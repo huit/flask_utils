@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 
-import yaml
-import os
-import boto3
-import base64
-
-from botocore.exceptions import ClientError
 from pyconfig.pyconfig import Config, Stack, SecretService
 
 from flask_utils.logger_util import get_common_logger
