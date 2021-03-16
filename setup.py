@@ -21,7 +21,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     packages=setuptools.find_packages(),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=[
         "cx-Oracle==8.1.0",
         "Flask==1.1.2",
@@ -31,6 +31,6 @@ setuptools.setup(
         'botocore==1.15.36',
         'PyYAML==5.3.1',
         'requests==2.25.1',
-        'pyslack @ https://github.com/huit/pyslack/archive/v1.0.2.tar.gz#egg=pyslack'
+        'pyslack==1.0.2 @ https://github.com/huit/pyslack/archive/v1.0.2.tar.gz#egg=pyslack'
     ]
 )

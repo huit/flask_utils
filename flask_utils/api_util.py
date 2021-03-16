@@ -6,10 +6,15 @@
 # Imports
 #============================================================================================
 # Standard imports
+import atexit
+import cx_Oracle
 
 # Third-party imports
 from flask_restx import Api
 from flask_utils.config_util import get_config
+from flask_utils.logger_util import get_common_logger
+
+logger = get_common_logger(__name__)
 
 API = None
 
@@ -57,3 +62,24 @@ def configure_app(flask_app):
     flask_app.config['RESTX_MASK_SWAGGER'] = False
     flask_app.config['ERROR_404_HELP'] = False
     flask_app.config['JSON_SORT_KEYS'] = False
+
+
+@atexit.register
+def cleanup():
+    """
+    Function to cleanup/close open resources prior to app shutdown
+    """
+    logger.info("App is shutting down. Beginning cleanup tasks.")
+    session_pool = get_config().db_config.get('pool')
+    if session_pool is not None:
+        logger.info("Active session pool found. Attempting to close session pool.")
+        try:
+            session_pool.close(force=True)
+        except cx_Oracle.Error as err:
+            logger.error("Unable to close the active session.", exc_info=True)
+            obj, = err.args
+            logger.error("Context:", obj.context)
+            logger.error("Message:", obj.message)
+        logger.info("Session pool successfully closed.")
+    logger.info("Cleanup tasks completed.")
+
