@@ -14,7 +14,7 @@ import cx_Oracle
 from flask import make_response, jsonify
 
 # Local imports
-from flask_utils.config_util import get_config
+from flask_utils.config_util import get_config_util
 from flask_utils.logger_util import get_common_logger
 
 logger = get_common_logger(__name__)
@@ -29,7 +29,7 @@ class DBUtil:
         """
         Function for creating a session pool with the database
         """
-        oracle_config = get_config().db_config
+        oracle_config = get_config_util().db_config
 
         if oracle_config.get('pool') is None:
             host = oracle_config.get('host')
