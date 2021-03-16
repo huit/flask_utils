@@ -16,7 +16,7 @@ from flask_accepts import for_swagger
 from marshmallow import Schema, fields
 
 # Local imports
-from flask_utils.config_util import get_config
+from flask_utils.config_util import get_config_util
 from flask_utils.logger_util import get_common_logger
 from flask_utils.db_util import DBUtil
 from flask_utils.api_util import get_api
@@ -64,7 +64,7 @@ class MonitorHealthFailSchema(Schema):
 @ns.route("/health")
 class ApiMonitor(Resource):
     f"""
-    /monitor/health The endpoint verifies the {get_config().api_config.get("title")} API is available
+    /monitor/health The endpoint verifies the {get_config_util().api_config.get("title")} API is available
     """
     api = get_api()
 
@@ -111,8 +111,8 @@ class ApiNotificationsTest(Resource):
         :param message:
         :return:
         """
-        api_config = get_config().api_config
-        webhook = get_config().get_value("SLACK_APIKEY")
+        api_config = get_config_util().api_config
+        webhook = get_config_util().get_value("SLACK_APIKEY")
         if webhook:
             notification_service = NotificationService(webhook=webhook, username=api_config["title"])
             response = notification_service.success(title=title, message=message, link="https://github.huit.harvard.edu/HUIT/flask_utils")
