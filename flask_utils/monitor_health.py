@@ -104,6 +104,13 @@ class ApiNotificationsTest(Resource):
     Allows the user to confirm the proper functioning of the slack integration, assuming that it
     """
     def get(self, title, message):
+        """
+        Allows the user to confirm the proper functioning of the slack integration, assuming that it
+
+        :param title:
+        :param message:
+        :return:
+        """
         api_config = get_config().api_config
         webhook = get_config().get_value("SLACK_APIKEY")
         if webhook:
