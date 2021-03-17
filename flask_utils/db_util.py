@@ -32,7 +32,7 @@ class DBUtil:
     def __init__(self):
         self._oracle_db = OracleDB(oracle_config=get_config_util().db_config,
                                    logging_level=logger.level,
-                                   logging_formatter=get_common_logging_format())
+                                   logging_format=get_common_logging_format())
 
     def execute_query(self, query_string, args=None):
         """
