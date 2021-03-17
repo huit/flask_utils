@@ -49,7 +49,7 @@ class DBUtil:
                 message=str("Unable to execute query against the database")
             ), 500)
 
-    def execute_update(self, pool, query_string, args=None):
+    def execute_update(self, query_string, args=None):
         """
         Function for executing an insert/update query against the database via the session pool
         """
