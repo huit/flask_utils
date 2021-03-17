@@ -79,6 +79,6 @@ class DBUtil:
         return self._db.health_check()
 
 
-def get_db_util():
+def get_db_util() -> DBUtil:
     global DB_UTIL
     return DB_UTIL
