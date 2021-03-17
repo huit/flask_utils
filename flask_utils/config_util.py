@@ -26,7 +26,10 @@ class ConfigUtil:
         :param secret_service: defaults to SecretService.SECRETS_MANAGER
         :param ansible_vars_dir_path: defaults to './ansible_vars'
         """
-        self.config = Config(stack=stack, secret_service=secret_service, ansible_vars_dir_path=ansible_vars_dir_path)
+        self.config = Config(stack=stack,
+                             secret_service=secret_service,
+                             ansible_vars_dir_path=ansible_vars_dir_path,
+                             logging_level=logger.level)
 
         self._db_config = {
             "host": self.config.get_value("DB_HOST"),
