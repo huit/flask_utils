@@ -18,12 +18,11 @@ from marshmallow import Schema, fields
 # Local imports
 from flask_utils.config_util import get_config_util
 from flask_utils.logger_util import get_common_logger
-from flask_utils.db_util import DBUtil
+from flask_utils.db_util import get_db_util
 from flask_utils.api_util import get_api
 from pyslack.notify import NotificationService
 
 logger = get_common_logger(__name__)
-db_util = DBUtil()
 
 ns = get_api().namespace('monitor',
                    description='Health check endpoint which returns a status 200 and status: '
@@ -79,8 +78,7 @@ class ApiMonitor(Resource):
         Get a PASS/FAIL based on API availability and responsiveness
         """
         try:
-            query = "SELECT 1 FROM DUAL"
-            response = db_util.execute_query(query)
+            response = get_db_util().health_check()
 
             if response is not None:
                 return jsonify(
