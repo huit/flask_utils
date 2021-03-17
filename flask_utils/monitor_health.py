@@ -79,9 +79,8 @@ class ApiMonitor(Resource):
         Get a PASS/FAIL based on API availability and responsiveness
         """
         try:
-            pool = db_util.get_session_pool()
             query = "SELECT 1 FROM DUAL"
-            response = db_util.execute_query(pool, query)
+            response = db_util.execute_query(query)
 
             if response is not None:
                 return jsonify(
