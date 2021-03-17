@@ -13,9 +13,13 @@ Module for interacting with the database
 import cx_Oracle
 from flask import make_response, jsonify
 
+from pydb.oracle_db import OracleDB
+
 # Local imports
 from flask_utils.config_util import get_config_util
 from flask_utils.logger_util import get_common_logger
+
+from pylog.pylog import get_common_logging_format
 
 logger = get_common_logger(__name__)
 
@@ -24,108 +28,35 @@ class DBUtil:
     """
     Class for interacting with the database
     """
-    @staticmethod
-    def get_session_pool():
-        """
-        Function for creating a session pool with the database
-        """
-        oracle_config = get_config_util().db_config
 
-        if oracle_config.get('pool') is None:
-            host = oracle_config.get('host')
-            port = oracle_config.get('port')
-            instance = oracle_config.get('instance')
+    def __init__(self):
+        self._oracle_db = OracleDB(oracle_config=get_config_util().db_config,
+                                   logging_level=logger.level,
+                                   logging_formatter=get_common_logging_format())
 
-            try:
-                dsn_str = cx_Oracle.makedsn(host, port, service_name=instance)
-                pool = cx_Oracle.SessionPool(
-                    user=oracle_config.get('user'),
-                    password=oracle_config.get('pwd'),
-                    dsn=dsn_str,
-                    min=2,
-                    max=5,
-                    increment=1,
-                    threaded=True,
-                    encoding="UTF-8"
-                    )
-            except cx_Oracle.DatabaseError as err:
-                obj, = err.args
-                logger.error("Context: %s", obj.context)
-                logger.error("Message: %s", obj.message)
-                return make_response(jsonify(
-                    message=str("Error connecting to the database and creating a session pool")
-                ), 500)
-            oracle_config['pool'] = pool
-            return pool
-        else:
-            return oracle_config['pool']
-
-    @staticmethod
-    def create_connection(pool):
-        """
-        Function for creating a connection with the database from a session pool
-        """
-        try:
-            connection = pool.acquire()
-        except cx_Oracle.DatabaseError as err:
-            obj, = err.args
-            logger.error("Context: %s", obj.context)
-            logger.error("Message: %s", obj.message)
-            return make_response(jsonify(
-                message=str("Error acquiring database connection from the session pool")
-            ), 500)
-        return connection
-
-    @staticmethod
-    def make_dict(cursor):
-        """
-        Function for converting a query result row into a dictionary
-        """
-        column_names = [d[0] for d in cursor.description]
-
-        def create_row(*args):
-            return dict(zip(column_names, args))
-        return create_row
-
-    def execute_query(self, pool, query_string, args=None):
+    def execute_query(self, query_string, args=None):
         """
         Function for executing a query against the database via the session pool
         """
         try:
-            connection = self.create_connection(pool)
-            cursor = connection.cursor()
-            if args is not None:
-                cursor.execute(query_string, args)
-            else:
-                cursor.execute(query_string)
-            cursor.rowfactory = self.make_dict(cursor)
-            query_result = cursor.fetchall()
-            cursor.close()
-            pool.release(connection)
-        except cx_Oracle.DatabaseError as err:
+            return self._oracle_db.execute_query(query_string, args)
+
+        except Exception as err:
             obj, = err.args
             logger.error("Context: %s", obj.context)
             logger.error("Message: %s", obj.message)
             return make_response(jsonify(
-                message = str("Unable to execute query against the database")
+                message=str("Unable to execute query against the database")
             ), 500)
-        return query_result
 
     def execute_update(self, pool, query_string, args=None):
         """
         Function for executing an insert/update query against the database via the session pool
         """
         try:
-            connection = self.create_connection(pool)
-            cursor = connection.cursor()
-            if args is not None:
-                cursor.execute(query_string, args)
-            else:
-                cursor.execute(query_string)
-            cursor.close()
-            connection.commit()
-            pool.release(connection)
-        except cx_Oracle.DatabaseError as err:
+            self._oracle_db.execute_update(query_string=query_string, args=args)
+
+        except Exception as err:
             obj, = err.args
             logger.error("Context: %s", obj.context)
             logger.error("Message: %s", obj.message)
