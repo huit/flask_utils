@@ -33,8 +33,13 @@ class DBUtil:
     """
 
     def __init__(self, db_type: Database = Database.ORACLE):
+        db_config = get_config_util().db_config
         if db_type == Database.ORACLE:
-            self._db = OracleDB(oracle_config=get_config_util().db_config,
+            self._db = OracleDB(host=db_config['host'],
+                                port=db_config['port'],
+                                service=db_config['service'],
+                                user=db_config['user'],
+                                pwd=db_config['pwd'],
                                 logging_level=logger.level,
                                 logging_format=get_common_logging_format())
         else:

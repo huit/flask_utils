@@ -34,7 +34,7 @@ class ConfigUtil:
         self._db_config = {
             "host": self.config.get_value("DB_HOST"),
             "port": self.config.get_value("DB_PORT"),
-            "instance": self.config.get_value("DB_INSTANCE"),
+            "service": self.config.get_value("DB_SERVICE"),
             "user": self.config.get_value("DB_USER"),
             "pwd": self.config.get_value("DB_PWD")
         }
@@ -45,11 +45,9 @@ class ConfigUtil:
             "description": self.config.get_value("APP_DESCRIPTION")
         }
 
-        # without either of these values, the app will fail
+        # without api_key, the app will fail
         if self._api_config['api_key'] is None:
             raise Exception('api_key is missing')
-        if self._db_config['pwd'] is None:
-            raise Exception('db password is missing')
 
         global CONFIG_UTIL
         CONFIG_UTIL = self
