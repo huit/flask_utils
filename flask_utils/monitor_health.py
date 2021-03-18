@@ -16,9 +16,9 @@ from flask_accepts import for_swagger
 from marshmallow import Schema, fields
 
 # Local imports
-from flask_utils.config_util import get_config_util
+from flask_utils.config_util import CONFIG_UTIL
 from flask_utils.logger_util import get_common_logger
-from flask_utils.db_util import get_db_util
+from flask_utils.db_util import DB_UTIL
 from flask_utils.api_util import get_api
 from pyslack.notify import NotificationService
 
@@ -63,7 +63,7 @@ class MonitorHealthFailSchema(Schema):
 @ns.route("/health")
 class ApiMonitor(Resource):
     f"""
-    /monitor/health The endpoint verifies the {get_config_util().api_config.get("name")} API is available
+    /monitor/health The endpoint verifies the {CONFIG_UTIL.api_config.get("name")} API is available
     """
     api = get_api()
 
@@ -78,7 +78,7 @@ class ApiMonitor(Resource):
         Get a PASS/FAIL based on API availability and responsiveness
         """
         try:
-            response = get_db_util().health_check()
+            response = DB_UTIL.health_check()
 
             if response is not None:
                 return jsonify(
@@ -108,8 +108,8 @@ class ApiNotificationsTest(Resource):
         :param message:
         :return:
         """
-        api_config = get_config_util().api_config
-        webhook = get_config_util().get_value("SLACK_APIKEY")
+        api_config = CONFIG_UTIL.api_config
+        webhook = CONFIG_UTIL.get_value("SLACK_APIKEY")
         if webhook:
             notification_service = NotificationService(webhook=webhook, username=api_config["title"])
             response = notification_service.success(title=title, message=message, link="https://github.huit.harvard.edu/HUIT/flask_utils")
