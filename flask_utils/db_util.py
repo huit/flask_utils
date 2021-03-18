@@ -17,14 +17,12 @@ from pydb.oracle_db import OracleDB
 from pydb.database import Database
 
 # Local imports
-from flask_utils.config_util import get_config_util
+from flask_utils.config_util import CONFIG_UTIL
 from flask_utils.logger_util import get_common_logger
 
 from pylog.pylog import get_common_logging_format
 
 logger = get_common_logger(__name__)
-
-DB_UTIL = None
 
 
 class DBUtil:
@@ -32,8 +30,11 @@ class DBUtil:
     Class for interacting with the database
     """
 
-    def __init__(self, db_type: Database = Database.ORACLE):
-        db_config = get_config_util().db_config
+    def __init__(self):
+        self._db = None
+
+    def setup(self, db_type: Database = Database.ORACLE):
+        db_config = CONFIG_UTIL.db_config
         if db_type == Database.ORACLE:
             self._db = OracleDB(host=db_config['host'],
                                 port=db_config['port'],
@@ -44,9 +45,6 @@ class DBUtil:
                                 logging_format=get_common_logging_format())
         else:
             self._db = None
-
-        global DB_UTIL
-        DB_UTIL = self
 
     def execute_query(self, query_string, args=None):
         """
@@ -84,6 +82,4 @@ class DBUtil:
         return self._db.health_check()
 
 
-def get_db_util() -> DBUtil:
-    global DB_UTIL
-    return DB_UTIL
+DB_UTIL = DBUtil()

@@ -10,16 +10,19 @@ from flask_utils.logger_util import get_common_logger
 
 logger = get_common_logger(__name__)
 
-CONFIG_UTIL = None
-
 
 class ConfigUtil:
     """
     All config values pulled from the OS environment
     """
-    def __init__(self, stack: Stack = Stack.LOCAL,
-                 secret_service: SecretService = SecretService.SECRETS_MANAGER,
-                 ansible_vars_dir_path: str = "./ansible_vars"):
+    def __init__(self):
+        self.config = None
+        self._db_config = None
+        self._api_config = None
+
+    def setup(self, stack: Stack = Stack.LOCAL,
+              secret_service: SecretService = SecretService.SECRETS_MANAGER,
+              ansible_vars_dir_path: str = "./ansible_vars"):
         """
         Retrieve values from OS environment
         :param stack: defaults to Stack.LOCAL
@@ -50,9 +53,6 @@ class ConfigUtil:
         if self._api_config['api_key'] is None:
             raise Exception('api_key is missing')
 
-        global CONFIG_UTIL
-        CONFIG_UTIL = self
-
     @property
     def db_config(self):
         return self._db_config
@@ -69,11 +69,4 @@ class ConfigUtil:
         return self.config.get_value(name)
 
 
-def get_config_util():
-    """
-    Function to retrieve the global application config
-    """
-    global CONFIG_UTIL
-    if CONFIG_UTIL is None:
-        CONFIG_UTIL = ConfigUtil()
-    return CONFIG_UTIL
+CONFIG_UTIL = ConfigUtil()
