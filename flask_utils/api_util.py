@@ -45,7 +45,7 @@ def setup_api():
     global API
     API = Api(
         version='1.0',
-        title=api_config.get('title'),
+        title=api_config.get('name'),
         description=api_config.get('description'),
         authorizations=authorizations,
         security='apikey'

@@ -63,7 +63,7 @@ class MonitorHealthFailSchema(Schema):
 @ns.route("/health")
 class ApiMonitor(Resource):
     f"""
-    /monitor/health The endpoint verifies the {get_config_util().api_config.get("title")} API is available
+    /monitor/health The endpoint verifies the {get_config_util().api_config.get("name")} API is available
     """
     api = get_api()
 

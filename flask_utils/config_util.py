@@ -40,9 +40,10 @@ class ConfigUtil:
         }
 
         self._api_config = {
-            "api_key": self.config.get_value("ECS_APIKEY"),
-            "title": self.config.get_value("APP_NAME"),
-            "description": self.config.get_value("APP_DESCRIPTION")
+            "api_key": self.config.get_value("APP_API_KEY"),
+            "name": self.config.get_value("APP_NAME"),
+            "description": self.config.get_value("APP_DESCRIPTION"),
+            "url_prefix": self.config.get_value("APP_URL_PREFIX")
         }
 
         # without api_key, the app will fail
