@@ -14,6 +14,7 @@ import cx_Oracle
 from flask import make_response, jsonify
 
 from pydb.oracle_db import OracleDB
+from pydb.sql_alchemy_oracle_db import SqlAlchemyOracleDB
 from pydb.database import Database
 
 # Local imports
@@ -43,6 +44,14 @@ class DBUtil:
                                 pwd=db_config['pwd'],
                                 logging_level=logger.level,
                                 logging_format=get_common_logging_format())
+        elif db_type == Database.SQL_ALCHEMY_ORACLE:
+            self._db = SqlAlchemyOracleDB(host=db_config['host'],
+                                          port=db_config['port'],
+                                          service=db_config['service'],
+                                          user=db_config['user'],
+                                          pwd=db_config['pwd'],
+                                          logging_level=logger.level,
+                                          logging_format=get_common_logging_format())
         else:
             self._db = None
 
