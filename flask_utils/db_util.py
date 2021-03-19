@@ -13,9 +13,9 @@ Module for interacting with the database
 import cx_Oracle
 from flask import make_response, jsonify
 
+from pydb.database import DatabaseType
 from pydb.oracle_db import OracleDB
 from pydb.sql_alchemy_oracle_db import SqlAlchemyOracleDB
-from pydb.database import DatabaseType
 
 # Local imports
 from flask_utils.config_util import CONFIG_UTIL
