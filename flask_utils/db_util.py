@@ -82,7 +82,8 @@ class DBUtil:
         return self._db.health_check()
 
     def cleanup(self):
-        self._db.cleanup()
+        if self._db is not None:
+            self._db.cleanup()
 
 
 DB_UTIL = DBUtil()
