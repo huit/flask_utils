@@ -71,7 +71,7 @@ def cleanup():
     Function to cleanup/close open resources prior to app shutdown
     """
     logger.info("App is shutting down. Beginning cleanup tasks.")
-    if DB_UTIL:
+    if DB_UTIL is not None:
         DB_UTIL.cleanup()
     logger.info("Cleanup tasks completed.")
 
