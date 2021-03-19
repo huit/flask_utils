@@ -15,7 +15,7 @@ from flask import make_response, jsonify
 
 from pydb.oracle_db import OracleDB
 from pydb.sql_alchemy_oracle_db import SqlAlchemyOracleDB
-from pydb.database import Database
+from pydb.database import DatabaseType
 
 # Local imports
 from flask_utils.config_util import CONFIG_UTIL
@@ -34,9 +34,9 @@ class DBUtil:
     def __init__(self):
         self._db = None
 
-    def setup(self, db_type: Database = Database.ORACLE):
+    def setup(self, db_type: DatabaseType = DatabaseType.ORACLE):
         db_config = CONFIG_UTIL.db_config
-        if db_type == Database.ORACLE:
+        if db_type == DatabaseType.ORACLE:
             self._db = OracleDB(host=db_config['host'],
                                 port=db_config['port'],
                                 service=db_config['service'],
@@ -44,7 +44,7 @@ class DBUtil:
                                 pwd=db_config['pwd'],
                                 logging_level=logger.level,
                                 logging_format=get_common_logging_format())
-        elif db_type == Database.SQL_ALCHEMY_ORACLE:
+        elif db_type == DatabaseType.SQL_ALCHEMY_ORACLE:
             self._db = SqlAlchemyOracleDB(host=db_config['host'],
                                           port=db_config['port'],
                                           service=db_config['service'],
