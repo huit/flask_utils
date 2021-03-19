@@ -94,5 +94,13 @@ class DBUtil:
         if self._db is not None:
             self._db.cleanup()
 
+    def create_connection(self):
+        if self._db is not None:
+            return self._db.create_connection()
+
+    def get_session(self):
+        if self._db is not None:
+            return self._db.get_session()
+
 
 DB_UTIL = DBUtil()
