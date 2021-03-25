@@ -98,11 +98,16 @@ class ApiMonitor(Resource):
 @ns.route("/hello/<string:title>/<string:message>")
 class ApiNotificationsTest(Resource):
     """
-    Allows the user to confirm the proper functioning of the slack integration, assuming that it
+    /monitor/hello/<string:title>/<string:message>
+    Allows the user to confirm the proper functioning of the slack integration, assuming that a Slack
+    webhook has been installed and configured in a SLACK_API_KEY variable
+    see https://github.com/huit/pyslack for more details
     """
     def get(self, title, message):
         """
-        Allows the user to confirm the proper functioning of the slack integration, assuming that it
+        Allows the user to confirm the proper functioning of the slack integration, assuming that a Slack
+        webhook has been installed and configured in a SLACK_APIKEY variable
+        see https://github.com/huit/pyslack for more details
 
         :param title:
         :param message:
