@@ -27,9 +27,9 @@ setuptools.setup(
         "Flask==1.1.2",
         "flask-restx==0.2.0",
         "flask_accepts==0.17.4",
-        'pylog @ https://github.com/huit/pylog/archive/v0.0.2.tar.gz#egg=pylog',
-        'pydb @ https://github.com/huit/pydb/archive/v0.0.2.tar.gz#egg=pydb',
-        'pyconfig @ https://github.com/huit/pyconfig/archive/v0.0.1.tar.gz#egg=pyconfig',
-        'pyslack @ https://github.com/huit/pyslack/archive/v1.0.3.tar.gz#egg=pyslack'
+        'pylog @ https://github.com/huit/pylog/archive/refs/tags/v0.0.2.tar.gz#egg=pylog',
+        'pydb @ https://github.com/huit/pydb/archive/refs/tags/v0.0.2.tar.gz#egg=pydb',
+        'pyconfig @ https://github.com/huit/pyconfig/archive/refs/tags/v0.0.1.tar.gz#egg=pyconfig',
+        'pyslack @ https://github.com/huit/pyslack/archive/refs/tags/v1.0.3.tar.gz#egg=pyslack'
     ]
 )
