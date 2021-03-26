@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 
 from functools import wraps
-from flask import request, abort
+from flask import request, abort, jsonify, make_response
+from werkzeug.exceptions import HTTPException
 
 from flask_utils.config_util import CONFIG_UTIL
+from flask_utils.logger_util import get_common_logger
+
+logger = get_common_logger(__name__)
 
 
 #============================================================================================
-# Decorator
+# Decorators
 #============================================================================================
 def apikey_required(view_function):
     """
@@ -21,4 +25,20 @@ def apikey_required(view_function):
             return view_function(*args, **kwargs)
         else:
             abort(401)
+    return decorated_function
+
+
+def api_endpoint_exception_handling(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except HTTPException as err:
+            return err.response
+        except Exception as error:
+            logger.error('Unhandled exception: %s', error, exc_info=True, stack_info=True)
+            return make_response(jsonify(
+                message=str(error)
+            ), 500)
+
     return decorated_function
