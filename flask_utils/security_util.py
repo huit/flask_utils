@@ -32,7 +32,7 @@ def api_endpoint_exception_handling(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
         try:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
         except HTTPException as err:
             return err.response
         except Exception as error:
