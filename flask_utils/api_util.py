@@ -14,7 +14,6 @@ from flask_restx import Api
 from flask_utils.config_util import CONFIG_UTIL
 from flask_utils.db_util import DB_UTIL
 from flask_utils.logger_util import get_common_logger
-from flask_utils.monitor_health import ns as monitor_health_ns
 
 logger = get_common_logger(__name__)
 
