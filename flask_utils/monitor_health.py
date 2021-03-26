@@ -130,3 +130,6 @@ class ApiNotificationsTest(Resource):
                 "alert": "slack integration not set up: requires configuration value for SLACK_APIKEY"
             }
         return make_response(jsonify(response_dict))
+
+
+get_api().add_namespace(ns)

@@ -53,8 +53,6 @@ def setup_api():
         security='apikey'
     )
 
-    API.add_namespace(monitor_health_ns)
-
 
 def configure_app(flask_app):
     """
