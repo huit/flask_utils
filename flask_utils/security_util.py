@@ -2,6 +2,7 @@
 
 from functools import wraps
 from flask import request, abort, jsonify, make_response
+from marshmallow import ValidationError
 from werkzeug.exceptions import HTTPException
 
 from flask_utils.config_util import CONFIG_UTIL
@@ -33,12 +34,17 @@ def api_endpoint_exception_handling(func):
     def decorated_function(*args, **kwargs):
         try:
             return func(*args, **kwargs)
+        except ValidationError as err:
+            logger.error('Validation exception: %s', err, exc_info=True, stack_info=True)
+            return make_response(jsonify(
+                message=str(err.messages)
+            ), 400)
         except HTTPException as err:
             return err.response
-        except Exception as error:
-            logger.error('Unhandled exception: %s', error, exc_info=True, stack_info=True)
+        except Exception as err:
+            logger.error('Unhandled exception: %s', err, exc_info=True, stack_info=True)
             return make_response(jsonify(
-                message=str(error)
+                message=str(err)
             ), 500)
 
     return decorated_function
