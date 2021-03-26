@@ -30,6 +30,12 @@ def apikey_required(view_function):
 
 
 def api_endpoint_exception_handling(func):
+    """
+    Decorator rovides basic exception handling, including Validation, HTTP, and general Exceptions
+    for API endpoints
+    :param func:
+    :return:
+    """
     @wraps(func)
     def decorated_function(*args, **kwargs):
         try:

@@ -50,7 +50,8 @@ monitor_health.py
     "/monitor/hello/<string:title>/<string:message>" verifies slack integration
   
 security_util.py
-* api_key_required() - wraps a method that represents an endpoint to ensure that the request has the proper api key    
+* api_key_required() - wraps a method that represents an endpoint to ensure that the request has the proper api key 
+* api_endpoint_exception_handling() wraps an api endpoint method to provide basic exception handling   
 ```
 
 ## Examples
