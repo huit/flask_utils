@@ -5,7 +5,9 @@
 # for 'target_app_secrets_ref' the task definition will include the lookup keys, which will be
 # fulfilled when the task definition is run
 target_app_secrets_ref:
-  - DB_PWD: (REQUIRED) <identifier for a valid aws secret stored in either parameter store or secrets manager>
+    # either DB_CONFIG, *or* DB_PWD plus all other DB_<> values in target_app_env, are required
+  - DB_CONFIG: (REQUIRED) <identifier for a valid aws secret stored in either parameter store or secrets manager>
+    DB_PWD: (REQUIRED) <identifier for a valid aws secret stored in either parameter store or secrets manager>
     ECS_APIKEY: (REQUIRED) <identifier for a valid aws secret stored in either parameter store or secrets manager>
     SLACK_APIKEY: (OPTIONAL, but REQUIRED for slack integration) <identifier for a valid aws secret stored in either parameter store or secrets manager>
 # for 'target_app_env' the keys and values are exactly included in the task definition

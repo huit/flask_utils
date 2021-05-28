@@ -39,17 +39,17 @@ class DBUtil:
         if db_type == DatabaseType.ORACLE:
             self._db = OracleDB(host=db_config['host'],
                                 port=db_config['port'],
-                                service=db_config['service'],
-                                user=db_config['user'],
-                                pwd=db_config['pwd'],
+                                service=db_config['dbname'],
+                                user=db_config['username'],
+                                pwd=db_config['password'],
                                 logging_level=logger.level,
                                 logging_format=get_common_logging_format())
         elif db_type == DatabaseType.SQL_ALCHEMY_ORACLE:
             self._db = SqlAlchemyOracleDB(host=db_config['host'],
                                           port=db_config['port'],
-                                          service=db_config['service'],
-                                          user=db_config['user'],
-                                          pwd=db_config['pwd'],
+                                          service=db_config['dbname'],
+                                          user=db_config['username'],
+                                          pwd=db_config['password'],
                                           logging_level=logger.level,
                                           logging_format=get_common_logging_format())
         else:
