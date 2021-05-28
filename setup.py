@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="adex-flask-utils",
-    version="0.0.2",
+    version="0.0.3",
     author="Michael Kerry",
     author_email="michael_kerry@harvard.edu",
     description="A utility for handling config, logging, security and Oracle db operations within a Flask application",
