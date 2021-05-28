@@ -32,7 +32,7 @@ class ConfigUtil:
                              ansible_vars_dir_path=ansible_vars_dir_path,
                              logging_level=logger.level)
 
-        if self.get_value("DB_CONFIG"):  # db config is in json string
+        if self.get_value("DB_CONFIG") != "NO VALUE FOUND":  # db config is in json string
             self._db_config = json.loads(self.config.get_value("DB_CONFIG"))
         else:
             self._db_config = {
